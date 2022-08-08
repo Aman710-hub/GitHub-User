@@ -4,11 +4,14 @@ import { MdSearch } from "react-icons/md";
 import { GithubContext } from "../context/context";
 import { useGlobalContext } from "../context/context";
 const Search = () => {
-  const { requests, error } = useGlobalContext();
+  const { requests, error, searchUser } = useGlobalContext();
   const [user, setUser] = React.useState("");
   // Global context
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (user) {
+      searchUser(user);
+    }
   };
   return (
     <section className="section">
