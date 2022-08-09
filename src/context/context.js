@@ -31,7 +31,19 @@ const GithubProvider = ({ children }) => {
     );
     if (response) {
       setGithubUser(response.data);
-      // more comming
+      const { login, followers_url } = response.data;
+      console.log("🚀 ~ searchUser ~ followers_url", followers_url);
+      // repos
+      axios(`${rootUrl}/users/${login}/repos?per_page=100`).then((response) => {
+        setRepos(response.data);
+      });
+      // followers
+      axios(`${followers_url}?per_page=100`).then((response) => {
+        setFollowers(response.data);
+      });
+
+      // console.log(response);
+      // console.log(response.data);
     } else {
       // if response is false then we display error
       errorFunc(true, "there is no such username");

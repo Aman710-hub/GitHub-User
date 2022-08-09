@@ -31,9 +31,7 @@ const Search = () => {
               onChange={(e) => setUser(e.target.value)}
             />
             {/* we will show "search" btn if "requests" is not 0 and "loading" is not false */}
-            {requests > 0 && loading === true && (
-              <button type="submit">search</button>
-            )}
+            {requests > 0 && !loading && <button type="submit">search</button>}
           </div>
         </form>
         <h3>requests : {requests} / 60 </h3>
