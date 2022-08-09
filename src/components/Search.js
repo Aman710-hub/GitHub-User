@@ -4,7 +4,7 @@ import { MdSearch } from "react-icons/md";
 import { GithubContext } from "../context/context";
 import { useGlobalContext } from "../context/context";
 const Search = () => {
-  const { requests, error, searchUser } = useGlobalContext();
+  const { requests, error, searchUser, loading } = useGlobalContext();
   const [user, setUser] = React.useState("");
   // Global context
   const handleSubmit = (e) => {
@@ -30,7 +30,10 @@ const Search = () => {
               value={user}
               onChange={(e) => setUser(e.target.value)}
             />
-            {requests > 0 && <button type="submit">search</button>}
+            {/* we will show "search" btn if "requests" is not 0 and "loading" is not false */}
+            {requests > 0 && loading === true && (
+              <button type="submit">search</button>
+            )}
           </div>
         </form>
         <h3>requests : {requests} / 60 </h3>

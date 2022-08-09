@@ -22,6 +22,7 @@ const GithubProvider = ({ children }) => {
   const [error, setError] = useState({ show: false, msg: "" });
 
   const searchUser = async (user) => {
+    setLoading(true);
     // error handle
     // every time we search we hide error msg
     errorFunc();
@@ -35,6 +36,8 @@ const GithubProvider = ({ children }) => {
       // if response is false then we display error
       errorFunc(true, "there is no such username");
     }
+    setLoading(false);
+    checkRequests();
   };
 
   const errorFunc = (show = false, msg = "") => {
@@ -60,7 +63,16 @@ const GithubProvider = ({ children }) => {
   useEffect(checkRequests, []);
   return (
     <GithubContext.Provider
-      value={{ githubUser, repos, followers, requests, error, searchUser }}
+      value={{
+        githubUser,
+        repos,
+        followers,
+        requests,
+        error,
+        searchUser,
+        loading,
+        setLoading,
+      }}
     >
       {children}
     </GithubContext.Provider>
