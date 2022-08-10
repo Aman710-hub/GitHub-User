@@ -32,18 +32,25 @@ const GithubProvider = ({ children }) => {
     if (response) {
       setGithubUser(response.data);
       const { login, followers_url } = response.data;
-      console.log("🚀 ~ searchUser ~ followers_url", followers_url);
-      // repos
-      axios(`${rootUrl}/users/${login}/repos?per_page=100`).then((response) => {
-        setRepos(response.data);
-      });
-      // followers
-      axios(`${followers_url}?per_page=100`).then((response) => {
-        setFollowers(response.data);
-      });
 
-      // console.log(response);
-      // console.log(response.data);
+      // Метод Promise.allSettled() возвращает промис, который исполняется когда все полученные промисы
+      //  завершены (исполнены или отклонены), содержащий массив результатов исполнения полученных промисов.
+      await Promise.allSettled([
+        axios(`${rootUrl}/users/${login}/repos?per_page=100`),
+        axios(`${followers_url}?per_page=100`),
+      ])
+        // then - returns a Promise once axios call gives succsesful response and we get acces to that response inside "then"
+        .then((results) => {
+          const [repos, followers] = results;
+          if (repos.status === "fulfilled") {
+            setRepos(repos.value.data);
+          }
+          if (followers.status === "fulfilled") {
+            setFollowers(followers.value.data);
+          }
+        })
+        // if axios gives Rejected response then we catch the error
+        .catch((err) => console.log(err));
     } else {
       // if response is false then we display error
       errorFunc(true, "there is no such username");
