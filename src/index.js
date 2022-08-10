@@ -6,14 +6,23 @@ import * as serviceWorker from "./serviceWorker";
 import { GithubProvider } from "./context/context";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { BrowserRouter as Router } from "react-router-dom";
+// dev-mb0d74nd.us.auth0.com
+// lBHtMkgJKmw3T62EyojbeajY4sI0NGNx
 
 ReactDOM.render(
   <React.StrictMode>
-    <GithubProvider>
-      <Router>
-        <App />
-      </Router>
-    </GithubProvider>
+    {/* this wraper came from api */}
+    <Auth0Provider
+      domain="dev-mb0d74nd.us.auth0.com"
+      clientId="lBHtMkgJKmw3T62EyojbeajY4sI0NGNx"
+      redirectUri={window.location.origin}
+    >
+      <GithubProvider>
+        <Router>
+          <App />
+        </Router>
+      </GithubProvider>
+    </Auth0Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
