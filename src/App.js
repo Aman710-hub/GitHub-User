@@ -4,13 +4,23 @@ import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div>
+    <AuthWrapper>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<Error />} />
+        <Route
+          path="/"
+          // private route should be inside "element" and the thing we want to be privat must be inside component "Private route"
+          element={
+            <PrivateRoute>
+              <Dashboard />{" "}
+            </PrivateRoute>
+          }
+        ></Route>
+        {/* <PrivateRoute> */}
+        {/* </PrivateRoute> */}
       </Routes>
-    </div>
+    </AuthWrapper>
   );
 }
 
