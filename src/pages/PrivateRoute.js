@@ -11,14 +11,13 @@ import { useAuth0 } from "@auth0/auth0-react";
 // };
 const PrivateRoute = ({ children }) => {
   const { isAuthenticated, user } = useAuth0();
-  console.log("🚀 ~ PrivateRoute ~ user", user);
-  console.log("🚀 ~ PrivateRoute ~ isAuthenticated", isAuthenticated);
 
   const isUser = isAuthenticated && user;
 
   if (!isUser) {
     return <Navigate to="/login" />;
   }
+  // this chiled is "Dashbord" component
   return children;
 };
 // const PrivateRoute = ({ children, ...rest }) => {
